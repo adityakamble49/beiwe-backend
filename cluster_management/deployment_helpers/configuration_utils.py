@@ -150,6 +150,7 @@ def validate_beiwe_environment_config(eb_environment_name):
     }
     
     for name, dsn in sentry_dsns.items():
+        dsn = dsn.encode("utf-8")
         if ensure_nonempty_string(dsn, name, errors, beiwe_variables_name):
             if not DSN_REGEX.match(dsn):
                 errors.append('({}) Invalid DSN: {}'.format(beiwe_variables_name, dsn))
@@ -159,7 +160,7 @@ def validate_beiwe_environment_config(eb_environment_name):
             # elif not PRIVATE_DSN_REGEX.match(dsn):
             #     errors.append('({}) Invalid DSN: {}'.format(beiwe_variables_name, dsn))
                 
-    domain_name = beiwe_variables.get('DOMAIN', None)
+    domain_name = beiwe_variables.get('DOMAIN', None).encode("utf-8")
     ensure_nonempty_string(domain_name, 'Domain name', errors, beiwe_variables_name)
 
     for key in reference_environment_configuration_keys:
